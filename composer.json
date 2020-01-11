@@ -5,7 +5,8 @@
     "authors": [
         {
             "name": "Loris Leiva",
-            "email": "loris.leiva@gmail.com"
+            "email": "loris.leiva@gmail.com",
+            "homepage": "https://lorisleiva.com"
         }
     ],
     "require": {
