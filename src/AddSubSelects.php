@@ -18,10 +18,25 @@ trait AddSubSelects
 
     public function loadSelect($keys)
     {
-        foreach ((is_string($keys) ? func_get_args() : $keys) as $key) {
+        $keys = array_unique(is_string($keys) ? func_get_args() : $keys);
+
+        // Prepare the wrapper query to attach subSelect queries.
+        $wrapperQuery = $this->getSubSelectWrapperQuery();
+        
+        // Add a subSelect query for each key that has a subSelect method
+        // And keep track of those loaded keys in a different array.
+        $loadedKeys = [];
+        foreach ($keys as $key) {
             if ($query = $this->getSubSelectQuery($key)) {
-                $this->attributes[$key] = $this->getValueFromSubSelectQuery($key, $query);
+                $wrapperQuery->selectSub($query->limit(1), $key);
+                $loadedKeys[] = $key;
             }
+        }
+
+        // Assign attributes based on the wrapped query results for each loaded key.
+        $result = $wrapperQuery->first();
+        foreach ($loadedKeys as $key) {
+            $this->attributes[$key] = $result->{$key};
         }
 
         return $this;
@@ -45,13 +60,18 @@ trait AddSubSelects
         }
     }
 
-    protected function getValueFromSubSelectQuery($key, $query)
+    protected function getSubSelectWrapperQuery()
     {
         return $this->query()
             ->getQuery()
             ->where($this->getKeyName(), $this->getKey())
+            ->limit(1);
+    }
+
+    protected function getValueFromSubSelectQuery($key, $query)
+    {
+        return $this->getSubSelectWrapperQuery()
             ->selectSub($query->limit(1), $key)
-            ->limit(1)
             ->first()
             ->{$key};
     }
