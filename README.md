@@ -25,14 +25,14 @@ class Book extends Model
     {
         return Chapter::select('id')
             ->whereColumn('book_id', 'books.id')
-            ->latest()
+            ->latest();
     }
 
     public function addLatestVersionSelect()
     {
         return Chapter::select('version')
             ->whereColumn('book_id', 'books.id')
-            ->orderByDesc('version')
+            ->orderByDesc('version');
     }
 }
 ```
