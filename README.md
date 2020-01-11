@@ -43,7 +43,7 @@ Now, you can eager-load these subSelect queries using the `withSelect` method.
 Book::withSelect('last_chapter_id', 'version')->get();
 ```
 
-You can also eager-load models that are already in memory using the `loadSelect` method.
+You can also eager-load models that are already in memory using the `loadSelect` method. Note that this method will load all provided subSelect queries in one single database query.
 
 ```php
 $book->loadSelect('last_chapter_id', 'version');
