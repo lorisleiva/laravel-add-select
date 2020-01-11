@@ -40,20 +40,20 @@ class Book extends Model
 Now, you can eager-load these subSelect queries using the `withSelect` method.
 
 ```php
-Book::withSelect('last_chapter_id', 'version')->get();
+Book::withSelect('last_chapter_id', 'latest_version')->get();
 ```
 
 You can also eager-load models that are already in memory using the `loadSelect` method. Note that this method will load all provided subSelect queries in one single database query.
 
 ```php
-$book->loadSelect('last_chapter_id', 'version');
+$book->loadSelect('last_chapter_id', 'latest_version');
 ```
 
 If you haven't eager-loaded these subSelect queries in a model, you can still access them as attributes. The first time you access them, They will cause a new database query but the following times they will be available in the model's attributes.
 
 ```php
 $book->last_chapter_id;
-$book->version;
+$book->latest_version;
 ```
 
 Finally, you can gloabally eager-load these subSelect queries by setting up the `withSelect` property on the Eloquent model.
