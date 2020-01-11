@@ -1,0 +1,36 @@
+{
+    "name": "lorisleiva/laravel-add-select",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Loris Leiva",
+            "email": "loris.leiva@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "5.8.*|^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0"
+    },
+    "autoload": {
+       "psr-4": {
+            "Lorisleiva\\LaravelAddSelect\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lorisleiva\\LaravelAddSelect\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lorisleiva\\LaravelAddSelect\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
